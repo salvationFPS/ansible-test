@@ -10,6 +10,9 @@
     - /var/log/mongodb2
     - /var/log/mongodb3
 
+- name: Create docker network
+  command: "docker network create -d bridge mongo_network"
+
 - name: Copy configuration files
   template:
     src: "roles/mongodb/files/mongo.conf.j2"

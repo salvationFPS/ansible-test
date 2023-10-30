@@ -6,7 +6,7 @@ Requires=docker.service
 [Service]
 ExecStartPre=-/usr/bin/docker stop {{ item.name }}
 ExecStartPre=-/usr/bin/docker rm {{ item.name }}
-ExecStart=/usr/bin/docker run -d --name {{ item.name }} \
+ExecStart=/usr/bin/docker run -d --name {{ item.name }} --network=mongo_network \
     -p {{ item.port }}:27017 \
     -v /var/lib/mongodb{{ item.num }}/data:/data/db \
     -v /var/log/mongodb{{ item.num }}:/var/log/mongodb \
