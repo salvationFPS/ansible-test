@@ -1,0 +1,17 @@
+- hosts: mongodb_servers
+  tasks:
+    - name: Create systemd unit files for MongoDB containers
+      template:
+        src: "templates/systemd_unit.j2"
+        dest: "/etc/systemd/system/mongodb{{ item.num }}.service"
+      with_items:
+        - { name: "mongodb1", port: 27017, num: 1 }
+        - { name: "mongodb2", port: 27018, num: 2 }
+        - { name: "mongodb3", port: 27019, num: 3 }
+
+    - name: Reload systemd
+      systemd:
+        state: reloaded
+
+  roles:
+    - mongodb

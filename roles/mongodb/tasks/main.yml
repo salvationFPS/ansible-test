@@ -1,0 +1,38 @@
+- name: Create data and log directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /var/lib/mongodb1/data
+    - /var/lib/mongodb2/data
+    - /var/lib/mongodb3/data
+    - /var/log/mongodb1
+    - /var/log/mongodb2
+    - /var/log/mongodb3
+
+- name: Copy configuration files
+  template:
+    src: "roles/mongodb/files/mongo.conf.j2"
+    dest: "/etc/mongod{{ item.num }}/mongod.conf"
+  with_items:
+    - { num: 1 }
+    - { num: 2 }
+    - { num: 3 }
+
+- name: Start MongoDB containers
+  systemd:
+    name: mongodb{{ item.num }}
+    state: started
+    enabled: yes
+  with_items:
+    - { num: 1 }
+    - { num: 2 }
+    - { num: 3 }
+
+- name: Create script for Replica Set initialization
+  template:
+      src: "roles/mongodb/files/replica_init_script.j2"
+      dest: "/tmp/replica_init_script.js"
+
+- name: Execute Replica Set initialization script
+  command: "docker exec mongodb1 mongo --eval 'load(\"/tmp/replica_init_script.js\")'"
