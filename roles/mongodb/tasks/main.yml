@@ -49,7 +49,7 @@
 
 - name: Create script for Replica Set initialization
   template:
-      src: "roles/mongodb/templates/replica_init_script.j2"
+      src: "roles/mongodb/templates/replica_init.j2"
       dest: "/tmp/replica_init_script.js"
 
 - name: Execute Replica Set initialization script
