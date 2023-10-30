@@ -9,6 +9,9 @@
     - /var/log/mongodb1
     - /var/log/mongodb2
     - /var/log/mongodb3
+    - /etc/mongod1
+    - /etc/mongod2
+    - /etc/mongod3
 
 - name: Create docker network
   command: "docker network create -d bridge mongo_network"
