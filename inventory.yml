@@ -1,4 +1,4 @@
-all:
+mongodb_servers:
   hosts:
     localhost:
   vars:
