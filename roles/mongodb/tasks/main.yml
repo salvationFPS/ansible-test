@@ -12,6 +12,7 @@
 
 - name: Create docker network
   command: "docker network create -d bridge mongo_network"
+  ignore_errors: true
 
 - name: Pull MongoDB image
   command: "docker pull mongo:4.4.6"
