@@ -37,6 +37,10 @@
     - { name: "mongodb2", port: 27018, num: 2 }
     - { name: "mongodb3", port: 27019, num: 3 }
 
+- name: Restart systemd daemon
+  systemd: daemon_reexec=yes
+
+
 - name: Start MongoDB containers
   systemd:
     name: mongodb{{ item.num }}
