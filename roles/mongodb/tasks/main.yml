@@ -1,8 +1,9 @@
+---
 - name: Create data and log directories
   file:
     path: "{{ item }}"
     state: directory
-  mode: 777
+    mode: 777
   with_items:
     - /var/lib/mongodb1/data
     - /var/lib/mongodb2/data
