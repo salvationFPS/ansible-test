@@ -4,7 +4,6 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-Type=forking
 Restart=always
 ExecStartPre=-/usr/bin/docker stop {{ item.name }}
 ExecStartPre=-/usr/bin/docker rm {{ item.name }}
