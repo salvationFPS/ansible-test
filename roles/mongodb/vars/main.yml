@@ -1,3 +1,3 @@
 ---
 mongodb_replica_name: rs0
-mongodb_port: 20017
+mongodb_port: 27017
