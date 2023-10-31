@@ -62,7 +62,7 @@
   command: "docker cp /tmp/replica_init_script.js mongodb1:/my_script.js"
 
 - name: Execute Replica Set initialization script
-  command: "docker exec mongodb1 mongo --port 27017 /my_script.js"
+  command: "docker exec mongodb1 mongo --port 27017 < /my_script.js"
   register: rs_init_result
 
 - debug: msg="{{ rs_init_result.stdout }}"
