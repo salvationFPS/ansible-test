@@ -56,5 +56,8 @@
       src: "roles/mongodb/templates/replica_init.js.j2"
       dest: "/tmp/replica_init_script.js"
 
+- name: Copy script into container
+  command: "docker cp /tmp/replica_init_script.js mongodb1:/my_script.js"
+
 - name: Execute Replica Set initialization script
-  command: "docker exec mongodb1 mongo --eval 'load(\"/tmp/replica_init_script.js\")'"
+  command: "docker exec mongodb1 mongo /my_script.js"
