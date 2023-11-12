@@ -1,0 +1,11 @@
+---
+- name: Create script for Replica Set initialization
+  template:
+    src: "roles/mongodb/templates/replica_init.js.j2"
+    dest: "/tmp/replica_init_script.js"
+
+- name: Copy script into container
+  command: "docker cp /tmp/replica_init_script.js mongodb:/my_script.js"
+
+- name: Execute Replica Set initialization script
+  command: "docker exec mongodb mongo --port 27017 < /my_script.js"

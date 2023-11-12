@@ -1,0 +1,13 @@
+---
+- name: Start mongodb container as system unit on all servers in hosts
+  hosts: mongodb_servers_multiple
+  tasks:
+    - name: Start mongodb container as system unit on all servers in hosts
+      include_tasks: tasks/start_mongodb.yml
+
+- name: Init replica set on first server
+  hosts: mongodb_servers_multiple
+  tasks:
+    - name: Init replica set on first server
+      include_tasks: init_replicaset.yaml
+      when: inventory_hostname == groups['mongodb_servers_multiple'][0]

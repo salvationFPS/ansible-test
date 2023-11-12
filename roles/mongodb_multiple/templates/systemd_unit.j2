@@ -1,0 +1,20 @@
+[Unit]
+Description=MongoDB Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker stop mongodb
+ExecStartPre=-/usr/bin/docker rm mongodb
+ExecStart=/usr/bin/docker run --rm --name mongodb --network=mongo_network \
+    -p {{ mongodb_port }}:27017 \
+    -v /var/lib/mongodb/data:/data/db \
+    -v /var/log/mongodb:/var/log/mongodb \
+    -v /etc/mongod/mongod.conf:/etc/mongod.conf \
+    mongo:4.4.6 --config /etc/mongod.conf
+ExecStop=/usr/bin/docker stop mongodb
+ExecStopPost=-/usr/bin/docker rm mongodb
+
+[Install]
+WantedBy=multi-user.target

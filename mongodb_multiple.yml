@@ -1,0 +1,3 @@
+- hosts: mongodb_servers_multiple
+  roles:
+    - mongodb_multiple

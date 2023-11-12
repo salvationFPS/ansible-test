@@ -3,3 +3,15 @@ mongodb_servers:
     localhost:
   vars:
     ansible_connection: local
+
+mongodb_servers_multiple:
+  hosts:
+    server1:
+      ansible_host: 192.168.1.1
+    server2:
+      ansible_host: 192.168.1.2
+    server3:
+      ansible_host: 192.168.1.3
+
+my_vars:
+  mongodb_replica_set_hosts: "{{ groups['mongodb_servers_multiple'] }}"

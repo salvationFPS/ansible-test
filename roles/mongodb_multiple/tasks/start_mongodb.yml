@@ -1,0 +1,33 @@
+---
+- name: Create data and log directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0777
+  with_items:
+    - /var/lib/mongodb/data
+    - /var/log/mongodb
+    - /etc/mongod
+
+- name: Pull MongoDB image
+  command: "docker pull mongo:4.4.6"
+
+- name: Copy configuration file
+  template:
+    src: "roles/mongodb/templates/mongo.conf.j2"
+    dest: "/etc/mongod/mongod.conf"
+
+- name: Create systemd unit files for MongoDB container
+  template:
+    src: "templates/systemd_unit.j2"
+    dest: "/etc/systemd/system/mongodb.service"
+
+- name: Restart systemd daemon
+  systemd: daemon_reexec=yes
+
+
+- name: Start MongoDB container
+  systemd:
+    name: mongodb
+    state: started
+    enabled: yes

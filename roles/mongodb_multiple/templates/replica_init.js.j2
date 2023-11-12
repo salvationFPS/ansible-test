@@ -1,0 +1,8 @@
+rs.initiate({
+  _id: "{{ mongodb_replica_name }}",
+  members: [
+     {% for host in mongodb_replica_set_hosts %}
+       { _id: {{ loop.index0 }}, host: "{{ hostvars[host]['ansible_host'] }}:{{ mongodb_port }}" }{% if not loop.last %},{% endif %}
+     {% endfor %}
+   ]
+});
